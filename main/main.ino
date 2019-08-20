@@ -15,6 +15,7 @@ int lightPin = 13;
 #define DHTPIN 4
 #define DHTTYPE DHT11 
 DHT dht(DHTPIN, DHTTYPE);
+float t = 0;
 //dht11 initializatin--------------------------------------------
 
 //fan initialization--------------------------------------------
@@ -61,6 +62,8 @@ void loop(){
 
 //  dht11--------------------------------------------------------
   float t = dht.readTemperature();
+  Serial.print(F("Temperature: "));
+  Serial.print(t);
   if(t>25){
     digitalWrite(fanPin, HIGH);
   } else {
@@ -70,11 +73,10 @@ void loop(){
 
   }
 
-  Serial.print("PIR: ");
+  Serial.print("  PIR: ");
   Serial.print(pirVal);
-  Serial.print("  LDR:");
-  Serial.print(lrdValue);      // print the value to the serial port
-  Serial.print("\n");
+  Serial.print("  LDR: ");
+  Serial.println(lrdValue);      // print the value to the serial port
 
   lrdValue = 0;
    digitalWrite(lightPin, LOW);
