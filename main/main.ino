@@ -10,6 +10,17 @@ int lrdValue = 0;     // result of reading the analog pin
 int lightPin = 13;
 //ldr initializatin--------------------------------------------
 
+//dht11 initialization--------------------------------------------
+#include <DHT.h>
+#define DHTPIN 4
+#define DHTTYPE DHT11 
+DHT dht(DHTPIN, DHTTYPE);
+//dht11 initializatin--------------------------------------------
+
+//fan initialization--------------------------------------------
+#define fanPin 10
+//fan initializatin--------------------------------------------
+
 void setup() {
 //  motion setup--------------------------------------------------
   pinMode(sensor, INPUT);    // initialize sensor as an input
@@ -19,10 +30,20 @@ void setup() {
   pinMode(lightPin, OUTPUT);      // initalize LED as an output
   pinMode(LDRpin, INPUT);    // initialize sensor as an input
 //  ldr setup--------------------------------------------------
+
+//  dht11 setup--------------------------------------------------
+  dht.begin();
+//  dht11 setup--------------------------------------------------
+
+//  fan setup--------------------------------------------------
+  pinMode(fanPin, OUTPUT); 
+//  fan setup--------------------------------------------------
   Serial.begin(9600);        // initialize serial
 }
 
 void loop(){
+    delay(2000);                    // wait a little
+    
 //  motion--------------------------------------------------------
   pirVal = analogRead(sensor);   // read sensor value
 //  motion--------------------------------------------------------
@@ -36,8 +57,16 @@ void loop(){
   } else{
     digitalWrite(lightPin, LOW);
   }
-  delay(100);                    // wait a little
 //  ldr--------------------------------------------------------
+
+//  dht11--------------------------------------------------------
+  float t = dht.readTemperature();
+  if(t>25){
+    digitalWrite(fanPin, HIGH);
+  } else {
+    digitalWrite(fanPin, LOW);
+  }
+//  dht11--------------------------------------------------------
 
   }
 

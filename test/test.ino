@@ -1,19 +1,25 @@
-#define LDRpin A0 // pin where we connected the LDR and the resistor
+#include <DHT.h>
 
-int lrdValue = 0;     // result of reading the analog pin
-int lightPin = 13;
+#define DHTPIN 4
+#define DHTTYPE DHT11 
+
+DHT dht(DHTPIN, DHTTYPE);
 
 void setup() {
-  Serial.begin(9600); // sets serial port for communication
+  Serial.begin(9600);
+  Serial.println(F("DHTxx test!"));
+
+  dht.begin();
 }
 
 void loop() {
-  lrdValue = analogRead(LDRpin); // read the value from the LDR
-  Serial.println(lrdValue);      // print the value to the serial port
-  if(lrdValue<100){
-    digitalWrite(lightPin, HIGH);
-  } else{
-    digitalWrite(lightPin, LOW);
-  }
-  delay(100);                    // wait a little
+  // Wait a few seconds between measurements.
+  delay(1000);
+
+  // Reading temperature or humidity takes about 250 milliseconds!
+  // Read temperature as Celsius (the default)
+  float t = dht.readTemperature();
+
+  Serial.print(F("Temperature: "));
+  Serial.println(t);
 }
