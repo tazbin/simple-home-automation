@@ -39,7 +39,7 @@ void setup() {
 //  fan setup--------------------------------------------------
   pinMode(fanPin, OUTPUT); 
 //  fan setup--------------------------------------------------
-  Serial.begin(9600);        // initialize serial
+  Serial.begin(115200);        // initialize serial
 }
 
 void loop(){
@@ -49,11 +49,11 @@ void loop(){
   pirVal = analogRead(sensor);   // read sensor value
 //  motion--------------------------------------------------------
 
-  if(pirVal>100){
+  if(1){
     
 //  ldr--------------------------------------------------------
   lrdValue = analogRead(LDRpin); // read the value from the LDR
-  if(lrdValue<100){
+  if(lrdValue<900){
     digitalWrite(lightPin, HIGH);
   } else{
     digitalWrite(lightPin, LOW);
@@ -78,7 +78,7 @@ void loop(){
   Serial.print("  LDR: ");
   Serial.println(lrdValue);      // print the value to the serial port
 
-  lrdValue = 0;
-   digitalWrite(lightPin, LOW);
+//  lrdValue = 0;
+//  digitalWrite(lightPin, LOW);
 
 }
